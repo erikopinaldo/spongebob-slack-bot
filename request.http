@@ -1,5 +1,5 @@
 POST http://localhost:8000/ HTTP/1.1
 content-type: application/x-www-form-urlencoded
 
-command=/weather
+command=/spongebobtext
 &text=here%20is%20some%20random%20text

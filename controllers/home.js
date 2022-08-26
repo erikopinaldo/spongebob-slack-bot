@@ -10,8 +10,17 @@ module.exports = {
         
         console.log(sponge)
 
-        res.json({ text: sponge })
-
-
+        res.status(200).json({
+            "response_type": "in_channel",
+            "blocks": [
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": sponge
+                    }
+                }
+            ]
+        })
     }
 }
