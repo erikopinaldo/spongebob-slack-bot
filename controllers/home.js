@@ -1,3 +1,5 @@
+const axios = require('axios').default;
+
 module.exports = {
     postSpongebob: (req,res)=>{
         console.log(req.body)
@@ -12,14 +14,22 @@ module.exports = {
         
         console.log(sponge)
 
-        res.status(200).json({
-            "response_type": "in_channel",
+        axios.post(req.body.response_url, { "response_type": "in_channel", "text": sponge })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+        res.status(200)
+        .json({
             "blocks": [
                 {
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": sponge
+                        "text": "_nice_"
                     }
                 }
             ]
