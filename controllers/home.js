@@ -1,5 +1,7 @@
 module.exports = {
     postSpongebob: (req,res)=>{
+        console.log(req.body)
+
         let textArr = req.body.text.toLowerCase().split('')
         let sponge = textArr.map(letter => {
             let random = Math.round(Math.random())
