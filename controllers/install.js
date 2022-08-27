@@ -17,5 +17,12 @@ module.exports = {
                 let token = JSON.parse(body).access_token; // Auth token 
             }
         })
+
+        request.post('https://slack.com/api/team.info', { form: { token: token } }, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                let team = JSON.parse(body).team.domain;
+                res.redirect('http://' + team + '.slack.com');
+            }
+        });
     }
 }
