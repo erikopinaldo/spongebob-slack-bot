@@ -14,6 +14,8 @@ module.exports = {
             code: req.query.code
         };
 
+        console.log(process.env.SLACK_CLIENT_ID.charAt(0))
+
         axios.post(`${apiUrl}/oauth.v2.access`, qs.stringify(authInfo))
         .then((result) => {
             // The payload data has been modified since the last version!

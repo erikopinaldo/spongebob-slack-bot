@@ -12,6 +12,8 @@ app.use(express.json())
 
 app.use('/slack', installRoutes)
 app.use('/', homeRoutes)
+
+console.log(process.env.SLACK_CLIENT_ID.charAt(0))
  
 app.listen(process.env.PORT, ()=>{
     console.log('Server is running, you better catch it!')
