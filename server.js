@@ -10,8 +10,8 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-app.use('/', homeRoutes)
 app.use('/slack', installRoutes)
+app.use('/', homeRoutes)
  
 app.listen(process.env.PORT, ()=>{
     console.log('Server is running, you better catch it!')

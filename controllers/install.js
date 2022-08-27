@@ -14,17 +14,19 @@ module.exports = {
             code: req.query.code
         };
 
-        axios.post(`${apiUrl}/oauth.access`, qs.stringify(authInfo))
+        axios.post(`${apiUrl}/oauth.v2.access`, qs.stringify(authInfo))
             .then((result) => {
                 // The payload data has been modified since the last version!
                 // See https://api.slack.com/methods/oauth.access
 
+                console.log('showing result.data')
                 console.log(result.data);
 
                 const { access_token, refresh_token, expires_in, error } = result.data;
 
                 if (error) {
                     res.sendStatus(401);
+                    console.log('showing first error')
                     console.log(error);
                     return;
                 }
@@ -37,13 +39,19 @@ module.exports = {
                 // However, in this scenario, because you are calling this API immediately after the initial OAuth, access_token is not expired thus you can just use it.
                 // See the additional code sample in the end of this file.
 
-                axios.post(`${apiUrl}/team.info`, qs.stringify({ token: access_token })).then((result) => {
-                    if (!result.data.error) {
-                        res.redirect(`http://${result.data.team.domain}.slack.com`);
-                    }
-                }).catch((err) => { console.error(err); });
+                axios.post(`${apiUrl}/team.info`, qs.stringify({ token: access_token }))
+                    .then((result) => {
+                        
+
+                        if (!result.data.error) {
+                            console.log('trying team redirect')
+                            res.redirect(`http://${result.data.team.domain}.slack.com`);
+                        }
+                    })
+                    .catch((err) => { console.error(err); });
 
             }).catch((err) => {
+                console.log('showing last error')
                 console.error(err);
             });
 
