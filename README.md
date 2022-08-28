@@ -25,15 +25,21 @@ Let's start off with how an input string can be converted into the target output
 2. Distributing the bot
     * By default, this app can be installed onto the workspace it is being developed on. However, it cannot be installed onto any other workspace. I needed to deploy its code and use Slack's oauth flow. This was definitely a learning experience for me and it took some time for me to understand it. I ended up using [this tutorial](https://tutorials.botsfloor.com/creating-a-slack-command-bot-from-scratch-with-node-js-distribute-it-25cf81f51040) that made things easier to understand. 
     * In short, this is what the oauth flow looks like:
-      * We give users an install button on a front-facing website that is specific for the app, and has certain requested scopes associated with it. For my button, I included the `command` scope, and also the `team:read` scope. We will need the `team:read` scope later when redirecting users back to their workspace after a successful install.
-      * The button is simply an anchor tag that sends user to https://slack.com/oauth/v2/authorize, with your app information included as parameters. This page then asks the userr if they want to allow the Slack app to access to their workspace.
+      * We give users an install button on a front-facing website that is specific for the app, and has certain requested scopes associated with it. For my button, I included the `command` scope (for slash command usage), and also the `team:read` scope. We will need the `team:read` scope later when redirecting users back to their workspace after a successful install.
+      * The button is simply an anchor tag that sends user to https://slack.com/oauth/v2/authorize, with your app information included as parameters. This page then asks the user if they want to allow the Slack app to access to their workspace.
       * Once the user accepts this prompt, our app's server receives a unique code. This code, along with our app's `client ID` and `client secret`, will need to be provided to Slack in order to complete the installation. 
       * We POST to https://slack.com/api/oauth.v2.access with the above information.
-      * After successful authorization, we then make a second POST to https://slack.com/api/team.info to get the workspace URL for the user that installed the app. We finally redirect the user to `teamdomain.slack.com` so that they are not left hanging on the previous auth page.
+      * After successful authorization, we then make a second POST to https://slack.com/api/team.info to get the workspace URL for the user that installed the app (this is why the `team:read` scope is needed). We finally redirect the user to `teamdomain.slack.com` so that they are not left hanging on the previous auth page.
 
 ## Lessons Learned:
 
-No matter what your experience level, being an engineer means continuously learning. Every time you build something you always have those *whoa this is awesome* or *fuck yeah I did it!* moments. This is where you should share those moments! Recruiters and interviewers love to see that you're self-aware and passionate about growing.
+* Auth is hard. There are a few steps involved, and to be honest, Slack's documentation felt lacking in the "big picture" area. I could understand individual steps for this flow, but I was having trouble understanding where to place them in my code. It helped seeing a full example and source code from the previously mentioned tutorial. 
+* Alternatively, implementing slash commands is super easy! I'm glad I started off with this functionality as my learning vehicle of choice. 
+
+## Opportunities
+
+* Show users that app installation was a success (currently, they are redirected to their workspace without this acknowledgement)
+* Add comments in code
 
 ## Examples:
 Take a look at these couple examples that I have in my own portfolio:
