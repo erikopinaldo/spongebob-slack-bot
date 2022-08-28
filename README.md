@@ -9,7 +9,7 @@ This is a bot that can be installed onto Slack workspaces. It is activated with 
 
 **Tech used:** JavaScript/Express/Node
 
-I started this project as a way to learn more about using Slack's APIs. As a result, the actual functionality of the bot is quite simple, with most of my effort being put into integrating the APIs. 
+I started this project as a way to learn more about using Slack's APIs. As a result, the actual functionality of the bot is quite simple, with most of my effort being put into learning the oauth flow. 
 
 ### Random capitalization logic
 
@@ -39,6 +39,9 @@ Let's start off with how an input string can be converted into the target output
 ## Opportunities
 
 * Show users that app installation was a success (currently, they are redirected to their workspace without this acknowledgement)
+* Support edge cases 
+  * No input text entered
+  * Input text already all upper case
 * Add comments in code
 
 ## Acknowledgements
