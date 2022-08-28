@@ -14,8 +14,6 @@ module.exports = {
             code: req.query.code
         };
 
-        console.log(process.env.SLACK_CLIENT_ID.charAt(0))
-
         axios.post(`${apiUrl}/oauth.v2.access`, qs.stringify(authInfo))
         .then((result) => {
             // The payload data has been modified since the last version!
@@ -46,8 +44,8 @@ module.exports = {
                     if (!result.data.error) {
                         console.log('trying team redirect')
                         console.log(result.data.team)
-                        // res.redirect(result.data.url);
-                        res.redirect(`slack://open?team=${result.data.team.id}`);
+                        res.redirect(result.data.url);
+                        // res.redirect(`slack://open?team=${result.data.team.id}`);
                     }
                 })
                 .catch((err) => { console.error(err); });
