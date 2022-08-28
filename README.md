@@ -19,17 +19,19 @@ Let's start off with how an input string can be converted into the target output
 
 1. Creating the Slack "app" entity and setting it up to use a slash command
     * Slack has a pretty simple process of creating an "app" entity on their platform, which can be done on https://api.slack.com/apps.
-    * This app entity can be given certain features or scopes, with one of them being a slash command. I then used [Slack's documenation](https://api.slack.com/interactivity/slash-commands) as reference when implementing the slash command.
+    * This app entity can be given certain features or scopes, with one of them being a slash command. I then used [Slack's documentation](https://api.slack.com/interactivity/slash-commands) as reference when implementing the slash command.
     * When a slash command is used in Slack, it sends a request to a request URL that you choose. This request's payload contains a bunch of information related to what was entered in Slack's message input field, as well as other contextual information such as user and team information. For my project, I needed to get the text that was entered along with the slash command (e.g. "This is some text").
     * The payload sent by a slash command also contains a `response_url`, which is a temporary webhook URL that can be used to generate message responses. You can send a POST request to this URL with the content of your desired message, which will then be posted as a Slack message in the conversation where the slash command was originally used. So in this case, I am sending my converted text (e.g. "tHiS iS SOMe TExT") along with my POST request.
 2. Distributing the bot
-    * By default, this app can be installed onto the workspace it is being developed on. However, it cannot be installed onto any other workspace. I needed to deploy its code and use Slack's oauth flow. This was definitely a learning experience for me and it took some time for me to understand it. I ended up using [this tutorial](https://tutorials.botsfloor.com/creating-a-slack-command-bot-from-scratch-with-node-js-distribute-it-25cf81f51040) that made things easier to understand. 
+    * By default, this app can be installed onto the workspace it is being developed on. However, it cannot be installed onto any other workspace yet. I needed to deploy its code and use Slack's oauth flow for other workspaces to be able to install the app. This was definitely a learning experience for me and it took some time for me to understand it. I ended up using [this tutorial](https://tutorials.botsfloor.com/creating-a-slack-command-bot-from-scratch-with-node-js-distribute-it-25cf81f51040) that made things easier to understand. 
     * In short, this is what the oauth flow looks like:
       * We give users an install button on a front-facing website that is specific for the app, and has certain requested scopes associated with it. For my button, I included the `command` scope (for slash command usage), and also the `team:read` scope. We will need the `team:read` scope later when redirecting users back to their workspace after a successful install.
       * The button is simply an anchor tag that sends users to https://slack.com/oauth/v2/authorize, with your app information included as parameters. This page then asks the user if they want to allow the Slack app to access to their workspace.
       * Once the user accepts this prompt, our app's server receives a unique code. This code, along with our app's `client ID` and `client secret`, will need to be provided to Slack in order to complete the installation. 
       * We POST to https://slack.com/api/oauth.v2.access with the above information.
       * After successful authorization, we then make a second POST to https://slack.com/api/team.info to get the workspace URL for the user that installed the app (this is why the `team:read` scope is needed). We finally redirect the user to `teamdomain.slack.com` so that they are not left hanging on the previous auth page.
+3. Hosting the bot
+    * The bot is being hosted on [Render](https://render.com/)
 
 ## Lessons Learned:
 
@@ -43,6 +45,7 @@ Let's start off with how an input string can be converted into the target output
   * No input text entered
   * Input text already all upper case
 * Add comments in code
+* Explore other hosting services - Render's free plan (which I am using) currently spins down the bot after 15 minutes of inactivity. This means that any user interacting with or installing the bot for the first time after it's spun down will experience some lag as the bot spins back up.
 
 ## Acknowledgements
 
