@@ -3,7 +3,7 @@ This is a bot that can be installed onto Slack workspaces. It is activated with 
 
 **Link to project:** https://spongebob-meme-slack-bot.netlify.app/
 
-![alt tag](http://placecorgi.com/1200/650)
+![spongebob-demo](https://user-images.githubusercontent.com/9390013/187084820-764f0f08-c855-422f-b6f9-2bd50ba0a84a.gif)
 
 ## How It's Made:
 
