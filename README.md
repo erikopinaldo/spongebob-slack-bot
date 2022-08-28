@@ -13,7 +13,7 @@ I started this project as a way to learn more about using Slack's APIs. As a res
 
 ### Random capitalization logic
 
-Let's start off with how an input string can be converted into the target output string with random capitalization, since this is pretty straightforward. The bot receives the input text after the Slack slash command is entered, maps through each character, and the same time generates a random number. Based on the number generated, we either return the character as it is, or we convert it to upper case. 
+Let's start off with how an input string can be converted into the target output string with random capitalization, since this is pretty straightforward. The bot receives the input text after the Slack slash command is entered, maps through each character, and at the same time generates a random number. Based on the number generated, we either return the character as it is, or we convert it to upper case. 
 
 ### Integrating with Slack APIs
 
