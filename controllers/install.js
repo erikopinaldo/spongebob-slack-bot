@@ -44,7 +44,8 @@ module.exports = {
                     if (!result.data.error) {
                         console.log('trying team redirect')
                         console.log(result.data.team)
-                        res.redirect(result.data.team.url);
+                        res.redirect(`http://${result.data.team.domain}.slack.com`)
+                        // res.redirect(result.data.team.url);
                         // res.redirect(`slack://open?team=${result.data.team.id}`);
                     }
                 })
