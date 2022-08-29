@@ -4,6 +4,11 @@ module.exports = {
     postSpongebob: (req,res)=>{
         console.log(req.body)
 
+        if (!signature.isVerified(req)) { // the request is NOT coming from Slack!
+            res.sendStatus(404);
+            return;
+        }
+
         let textArr = req.body.text.toLowerCase().split('')
         let sponge = textArr.map(letter => {
             let random = Math.round(Math.random())
