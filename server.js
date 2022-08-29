@@ -6,9 +6,15 @@ const installRoutes = require('./routes/install')
 
 require('dotenv').config({path: './config/.env'})
 
-app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+// Not sure how exactly this works yet, but this helps in parsing our raw body from every request to our server
+const rawBodyBuffer = (req, res, buf, encoding) => {
+    if (buf && buf.length) {
+        req.rawBody = buf.toString(encoding || 'utf8');
+    }
+};
+
+app.use(bodyParser.urlencoded({ verify: rawBodyBuffer, extended: true }));
+app.use(bodyParser.json({ verify: rawBodyBuffer }));
 
 app.use('/slack', installRoutes)
 app.use('/', homeRoutes)
