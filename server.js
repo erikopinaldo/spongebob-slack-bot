@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const signature = require('./verifySignature');
 const bodyParser = require('body-parser')
 const homeRoutes = require('./routes/home')
 const installRoutes = require('./routes/install')
