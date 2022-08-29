@@ -14,6 +14,7 @@ module.exports = {
         
         console.log(sponge)
 
+        // Send converted text as a message to channel/conversation
         axios.post(req.body.response_url, { "response_type": "in_channel", "text": sponge })
             .then(response => {
                 console.log(response);
@@ -23,7 +24,7 @@ module.exports = {
             });
 
         res.status(200)
-        .json({
+        .json({ // Sends a success message that only the user who used the slash command can see
             "blocks": [
                 {
                     "type": "section",
