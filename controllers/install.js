@@ -1,6 +1,6 @@
 const axios = require('axios');
 const apiUrl = 'https://slack.com/api';
-const qs = require('qs'); 
+const qs = require('qs');
 
 module.exports = {
     getInstall: (req, res) => {
@@ -15,46 +15,34 @@ module.exports = {
         };
 
         axios.post(`${apiUrl}/oauth.v2.access`, qs.stringify(authInfo))
-        .then((result) => {
-            // The payload data has been modified since the last version!
-            // See https://api.slack.com/methods/oauth.access
+            .then((result) => {
 
-            console.log('showing result.data')
-            console.log(result.data);
+                console.log('showing result.data')
+                console.log(result.data);
 
-            const { access_token, refresh_token, expires_in, error } = result.data;
+                const { access_token, refresh_token, expires_in, error } = result.data;
 
-            if (error) {
-                res.sendStatus(401);
-                console.log('showing first error')
-                console.log(error);
-                return;
-            }
+                if (error) {
+                    res.sendStatus(401);
+                    console.log(error);
+                    return;
+                }
 
-            // This link will open the workspace in Slack client, 
-            // however, I am calling extra API for the tutorial to show you how to use Web API.
-            // res.redirect(`slack://open?team=${team_id}`);
+                axios.post(`${apiUrl}/team.info`, qs.stringify({ token: access_token }))
+                    .then((result) => {
+                        if (!result.data.error) {
+                            console.log('trying team redirect')
+                            console.log(result.data.team)
+                            res.redirect(`http://${result.data.team.domain}.slack.com`)
+                            // res.redirect(`slack://open?team=${result.data.team.id}`); // opens Slack app
+                        }
+                    })
+                    .catch((err) => { console.error(err); });
 
-            // When you call Web APIs, you need to check if your access_token (xoxa-) is expired (60min) and if it is, get a fresh access token with your refresh_token (xoxr-).  
-            // However, in this scenario, because you are calling this API immediately after the initial OAuth, access_token is not expired thus you can just use it.
-            // See the additional code sample in the end of this file.
-
-            axios.post(`${apiUrl}/team.info`, qs.stringify({ token: access_token }))
-                .then((result) => {
-                    if (!result.data.error) {
-                        console.log('trying team redirect')
-                        console.log(result.data.team)
-                        res.redirect(`http://${result.data.team.domain}.slack.com`)
-                        // res.redirect(result.data.team.url);
-                        // res.redirect(`slack://open?team=${result.data.team.id}`);
-                    }
-                })
-                .catch((err) => { console.error(err); });
-
-        })
-        .catch((err) => {
-            console.log('showing last error')
-            console.error(err);
-        });
+            })
+            .catch((err) => {
+                console.log('showing last error')
+                console.error(err);
+            });
     }
 }
