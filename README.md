@@ -44,6 +44,7 @@ Let's start off with how an input string can be converted into the target output
 * Support edge cases 
   * No input text entered
   * Input text already all upper case
+* Verify all requests going to app are coming from Slack
 * Add comments in code
 * Explore other hosting services - Render's free plan (which I am using) currently spins down the bot after 15 minutes of inactivity. This means that any user interacting with or installing the bot for the first time after it's spun down will experience some lag as the bot spins back up.
 
