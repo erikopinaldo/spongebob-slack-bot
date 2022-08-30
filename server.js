@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const homeRoutes = require('./routes/home')
 const installRoutes = require('./routes/install')
 
-require('dotenv').config({path: './config/.env'})
+// require('dotenv').config({path: './config/.env'})
 
 // Not sure how exactly this works yet, but this helps in parsing our raw body from every request to our server
 const rawBodyBuffer = (req, res, buf, encoding) => {
