@@ -1,5 +1,7 @@
 POST http://localhost:8000/ HTTP/1.1
 content-type: application/x-www-form-urlencoded
+x-slack-request-timestamp: '1689816433'
+x-slack-signature: 'v0=17577da74a0a79741a86aff4775faf6jf8wejjdf0ehf11bc3173ac21309d1a795'
 
 command=/spongebobtext
 &text=here%20is%20some%20random%20text
