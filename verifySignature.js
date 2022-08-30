@@ -14,9 +14,6 @@ const isVerified = (req) => {
     // The signature variable from our req header will be split into two different variables, the version and the hash. More information about these two different parts at https://api.slack.com/authentication/verifying-requests-from-slack#verifying-requests-from-slack-using-signing-secrets__a-recipe-for-security__how-to-make-a-request-signature-in-4-easy-steps-an-overview
     const [version, hash] = signature.split('=');
 
-    console.log(version)
-    console.log(hash)
-
     // Check if the timestamp is too old
     const fiveMinutesAgo = ~~(Date.now() / 1000) - (60 * 5);
     if (timestamp < fiveMinutesAgo) return false;
